@@ -61,15 +61,20 @@ class MenuController
     puts "End of entries"
   end
 
-  def view_entry
+  def view_entry(invalid = false)
     system "clear"
+
+    if invalid == true
+      puts "Please enter a valid entry number."
+    end
+
     print "Enter entry number: "
     selection = gets.to_i
 
     if @address_book.entries[selection] != nil
       puts @address_book.entries[selection].to_s
     else
-      puts "Enter a valid record number"
+      view_entry(true)
     end
   end
 
