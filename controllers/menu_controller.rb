@@ -13,7 +13,8 @@ class MenuController
     puts "2 - Create an entry"
     puts "3 - Search for an entry"
     puts "4 - Import entries from CSV"
-    puts "5 - Exit"
+    puts "5 - Destroy all entries"
+    puts "6 - Exit"
     print "Enter selection: "
 
     selection = gets.to_i
@@ -36,6 +37,9 @@ class MenuController
       read_csv
       main_menu
     when 5
+      destroy
+      main_menu
+    when 6
       puts "Goodbye!"
       exit(0)
     else
@@ -72,7 +76,14 @@ class MenuController
 
   def delete_entry(entry)
     @address_book.entries.delete(entry)
-    puts "#{entry_name} has been deleted"
+    puts "#{entry.name} has been deleted"
+  end
+
+  def destroy
+    all_entries = @address_book.entries.clone
+    all_entries.each do |entry|
+      delete_entry(entry)
+    end
   end
 
   def edit_entry(entry)
@@ -142,12 +153,12 @@ class MenuController
       edit_entry(entry)
       entry_submenu(entry)
     when "m"
-        system "clear"
-        main_menu
+      system "clear"
+      main_menu
     else
       system "clear"
       puts "#{selection} is not a valid input"
-      entries_submenu(entry)
+      entry_submenu(entry)
     end
   end
 
